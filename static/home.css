@@ -1,0 +1,82 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.wrapper{
+  background-color: #97CAEF;
+  background-size: cover;
+  height: 100vh;
+
+}
+.navbar{
+  height: 80px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+.logo{
+  width: 150px;
+  height: auto;
+  padding: 5px 100px;
+  margin-top: -20px;
+}
+.navbar ul {
+  float: right;
+  margin-right: 20px;
+}
+.navbar ul li{
+  list-style: none;
+  margin: 0 8px;
+  display: inline-block;
+  line-height: 80px;
+}
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  padding: 6px 15px;
+  font-family: 'Arial', sans-serif;
+  transition: .4s;
+}
+.navbar ul li a.active,
+.navbar ul li a:hover{
+  background: #55BCC9;
+  border-radius: 20px;
+}
+
+.center h1{
+  font-family:'Franklin Gothic Medium', Arial, sans-serif;
+  font-size: 80px;
+  padding: 50px 100px;
+}
+.center h3{
+  font-family:'Franklin Gothic Medium', Arial, sans-serif;
+  font-size: 50px;
+  padding: 50px 100px;
+}
+.robot{
+  position: absolute;
+  padding: 100px;
+  right: 100px;
+  top: 40px;
+}
+.chat{
+  position: absolute;
+  padding: 100px;
+  right: 490px;
+  top: 430px;
+  height: 150px;
+}
+.mess{
+  position: absolute;
+  padding: 100px;
+  right: 560px;
+  top: 320px;
+  height: 80px;
+}
+.globe{
+  position: absolute;
+  padding: 100px;
+  right: 560px;
+  top: 220px;
+  height: 60px;
+}

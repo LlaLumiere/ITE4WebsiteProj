@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        #chat-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="startNewChat()">Start New Chat</button>
+        <button onclick="loadPreviousChat()">Load Previous Chat</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+
+            if (message === '') {
+                return;
+            }
+
+            const chatHistory = getChatHistory();
+            const editingIndex = chatHistory.findIndex(entry => entry.isEditing);
+
+            if (editingIndex !== -1) {
+                // Editing an existing message
+                chatHistory[editingIndex] = { content: message };
+                chatHistory[editingIndex].isEditing = false;
+            } else {
+                // Save a new message to local storage
+                chatHistory.push({ content: message });
+            }
+
+            saveChatHistory(chatHistory);
+            messageInput.value = '';
+            fetchMessages();
+        }
+
+        function editMessage(index) {
+            const chatHistory = getChatHistory();
+            chatHistory[index].isEditing = true;
+            saveChatHistory(chatHistory);
+
+            // Populate the input field with the message for editing
+            const messageInput = document.getElementById('messageInput');
+            messageInput.value = chatHistory[index].content;
+        }
+
+        function cancelEdit(index) {
+            const chatHistory = getChatHistory();
+            chatHistory[index].isEditing = false;
+            saveChatHistory(chatHistory);
+            fetchMessages();
+        }
+
+        function startNewChat() {
+            // Clear the chat history in local storage
+            saveChatHistory([]);
+            fetchMessages();
+        }
+
+        function loadPreviousChat() {
+            // Load and display the previous chat history
+            fetchMessages();
+        }
+
+        function fetchMessages() {
+            const messages = getChatHistory();
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = '';
+
+            messages.forEach((message, index) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                const contentDiv = document.createElement('div');
+                contentDiv.textContent = message.content;
+                messageDiv.appendChild(contentDiv);
+
+                const buttonsDiv = document.createElement('div');
+                const editButton = document.createElement('button');
+                const cancelButton = document.createElement('button');
+
+                if (message.isEditing) {
+                    editButton.textContent = 'Update';
+                    editButton.onclick = () => sendMessage();
+                    cancelButton.textContent = 'Cancel';
+                    cancelButton.onclick = () => cancelEdit(index);
+                } else {
+                    editButton.textContent = 'Edit';
+                    editButton.onclick = () => editMessage(index);
+                    cancelButton.textContent = 'Delete';
+                    cancelButton.onclick = () => deleteMessage(index);
+                }
+
+                buttonsDiv.appendChild(editButton);
+                buttonsDiv.appendChild(cancelButton);
+                messageDiv.appendChild(buttonsDiv);
+
+                chatMessages.appendChild(messageDiv);
+            });
+        }
+
+        function deleteMessage(index) {
+            const chatHistory = getChatHistory();
+            chatHistory.splice(index, 1);
+            saveChatHistory(chatHistory);
+            fetchMessages();
+        }
+
+        function getChatHistory() {
+            // Retrieve chat history from local storage
+            const storedHistory = localStorage.getItem('chatHistory');
+            return JSON.parse(storedHistory) || [];
+        }
+
+        function saveChatHistory(history) {
+            // Save chat history to local storage
+            localStorage.setItem('chatHistory', JSON.stringify(history));
+        }
+
+        // Fetch messages when the page loads
+        fetchMessages();
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    {% load static %}
+    <link rel="stylesheet" type ="text/css" href="{% static 'base.css' %}"> 
+</head>
+<body>
+    <header>
+        <div class="banner">
+            <nav class="navbar">
+                <ul>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                </ul>
+            </nav>
+            <div class="content">
+                <h1>AI Chatbot Project</h1>
+                
+                <div class="login">
+                    <p>Click continue to login.</p>
+                </div>
+                <div class="button">
+                    <a href="{% url 'login' %}"><button type="button"><span>Continue</span></button></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AiChatBot</title>
+  {%load static %}
+  <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+    <nav class="navbar">
+        <img class="logo" src="{% static 'ChatBotLogo.png' %}">
+        <ul>
+            <li><a href="{% url 'save_chat' %}">Conversations</a></li>
+            <li><a href="{% url 'chatbot' %}">Chatbot</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="center">
+        <h1>Hi there,<br> {{ user.userprofile.firstname }} {{ user.userprofile.lastname }}!</h1>
+        <h3>I'm here to<br> assist you!</h3>
+        <!-- <p>Your email: {{ user.email }}</p> -->
+    </div>
+    <div>
+      <div class="homepage">
+        <img class = "jpeg" src="{%static 'chatbot.png' %}" alt="">
+      </div>
+    </div>
+</div>
+
+</body>
+</html>
